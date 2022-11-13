@@ -36,7 +36,7 @@ I made a python program using tkinter as user interface. This program makes requ
 
 ## Portfolio Link
 
-`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Weather%20program`
+`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Weather%20Program`
 
 ## Video
 
