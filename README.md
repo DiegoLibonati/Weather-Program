@@ -24,19 +24,9 @@ I made a python program using tkinter as user interface. This program makes requ
 5. requests
 6. pytz
 
-## Galery
-
-![weather-program](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Python/Imagenes/weatherapppython-0.jpg)
-
-![weather-program](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Python/Imagenes/weatherapppython-1.jpg)
-
-![weather-program](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Python/Imagenes/weatherapppython-2.jpg)
-
-![weather-program](https://raw.githubusercontent.com/DiegoLibonati/DiegoLibonatiWeb/main/data/projects/Python/Imagenes/weatherapppython-3.jpg)
-
 ## Portfolio Link
 
-`https://diegolibonati.github.io/DiegoLibonatiWeb/#/projects?q=Weather%20Program`
+[`https://www.diegolibonati.com.ar/#/project/28`](https://www.diegolibonati.com.ar/#/project/28)
 
 ## Video
 
