@@ -5,7 +5,7 @@
 1. Clone the repository
 2. Join to the correct path of the clone
 3. Install requirements.txt
-4. Use `python wheater_program.py` to execute program
+4. Use `python ./src/app.py` to execute program
 
 ## Description
 
@@ -37,24 +37,27 @@ https://user-images.githubusercontent.com/99032604/199621088-7b9f342a-5118-4910-
 The `get_datetime()` function gets the current time in hours and minutes of the place we are looking for:
 
 ```
-def get_datetime(self, place):
-
+def get_datetime(
+    self, place: pytz
+) -> None:
+    
     local_time_hours = datetime.now(place).hour
     local_time_minutes = datetime.now(place).minute
 
     if local_time_hours >= 12 and local_time_hours <= 23:
-        return self.time.set(f"{local_time_hours}:{local_time_minutes} PM")
-    else:
-        if local_time_hours >= 0 and local_time_hours <10:
-            return self.time.set(f"0{local_time_hours}:{local_time_minutes} AM")
-        else:
-            return self.time.set(f"{local_time_hours}:{local_time_minutes} AM")
+        self.time.set(f"{local_time_hours}:{local_time_minutes} PM")
+        return
+    else: 
+        self.time.set(f"{utils.add_zero(local_time_hours)}:{local_time_minutes} AM")
+        return
 ```
 
 The `get_place_location()` function gets the longitude and latitude of the location you are looking for:
 
 ```
-def get_place_location(self, place):
+def get_place_location(
+    self, place: str 
+) -> list:
 
     geolocator = Nominatim(user_agent="geoapiExercises")
     location = geolocator.geocode(place)
@@ -67,12 +70,14 @@ def get_place_location(self, place):
 The `get_api_info()` function obtains the information from the API about the place that was searched, among these we find the temperature, the sensation ends, the wind, the description, the humidity and the pressure:
 
 ```
-def get_api_info(self, long, lat):
+def get_api_info(
+    self, long: int, lat: int
+) -> list:
 
     place_long = long
     place_lat = lat
 
-    API_KEY = 'YOUR API KEY'
+    API_KEY = os.getenv("API_KEY")
     api = f"https://api.openweathermap.org/data/2.5/weather?lat={round(place_lat)}&lon={round(place_long)}&appid={API_KEY}"
 
     json_data = requests.get(api).json()
@@ -90,14 +95,16 @@ def get_api_info(self, long, lat):
 The `get_Weather()` function grabs the desired location information and renders it to the screen so the user can grab that information:
 
 ```
-def get_Weather(self):
+def get_Weather(
+    self
+) -> None:
     self.current_weather.set("CURRENT WEATHER")
     self.wind_text.set("WIND")
     self.description_text.set("DESCRIPTION")
     self.pressure_text.set("PRESSURE")
     self.humidity_text.set("HUMIDITY")
     place = self.entry_place.get()
-
+    
     result_location = self.get_place_location(place)
 
     result_time_zone = result_location[0]

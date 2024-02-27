@@ -1,15 +1,21 @@
-from tkinter import *
-import tkinter as tk
-from geopy.geocoders import Nominatim
-from tkinter import ttk, messagebox
-from timezonefinder import TimezoneFinder
-from datetime import datetime
 import requests
 import pytz
+import os
+
+from tkinter import *
+from datetime import datetime
+
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
+
+from utils import utils
+
 
 class Program:
 
-    def __init__(self,master):
+    def __init__(
+        self, master: Tk
+    ):
         master.title("Wheater APP")
         master.geometry("900x500+300+200")
         master.config(bg="#4c75bd")
@@ -19,9 +25,9 @@ class Program:
         self.font_family = "poppins"
 
         # Search
-        self.search_image = PhotoImage(file="./search.png")
+        self.search_image = PhotoImage(file="./src/assets/search.png")
         self.entry_place = StringVar()
-        self.search_icon_image = PhotoImage(file="./search_icon.png")
+        self.search_icon_image = PhotoImage(file="./src/assets/search_icon.png")
 
         Label(image=self.search_image, border=0).place(x=20, y=20)
         Entry(bg="#fff", width=20, font=(self.font_family, 25, "bold"), fg="#4c75bd", justify="center", border=0, textvariable=self.entry_place).place(x=55, y=40)
@@ -29,12 +35,12 @@ class Program:
 
         #Logo
 
-        self.logo_image = PhotoImage(file="./logo.png")
+        self.logo_image = PhotoImage(file="./src/assets/logo.png")
         Label(image=self.logo_image, border=0).place(x=150, y=100)
 
         #Bottom
 
-        self.box_image = PhotoImage(file="./box.png")
+        self.box_image = PhotoImage(file="./src/assets/box.png")
         Label(image=self.box_image, border=0).pack(padx=5, pady=5, side=BOTTOM)
 
         #Labels
@@ -65,20 +71,25 @@ class Program:
         Label(font=(self.font_family, 20), textvariable=self.pressure_text, bg="white", fg="#4c75bd", border=0).place(x=720,y=420, anchor="center")
         Label(font=(self.font_family, 22), textvariable=self.pressure_value, bg="white", fg="#4c75bd", border=0).place(x=720,y=450, anchor="center")
 
-    def get_datetime(self, place):
+
+    def get_datetime(
+        self, place: pytz
+    ) -> None:
         
         local_time_hours = datetime.now(place).hour
         local_time_minutes = datetime.now(place).minute
 
         if local_time_hours >= 12 and local_time_hours <= 23:
-            return self.time.set(f"{local_time_hours}:{local_time_minutes} PM")
+            self.time.set(f"{local_time_hours}:{local_time_minutes} PM")
+            return
         else: 
-            if local_time_hours >= 0 and local_time_hours <10:
-                return self.time.set(f"0{local_time_hours}:{local_time_minutes} AM")
-            else:
-                return self.time.set(f"{local_time_hours}:{local_time_minutes} AM")
+            self.time.set(f"{utils.add_zero(local_time_hours)}:{local_time_minutes} AM")
+            return
 
-    def get_place_location(self, place):
+
+    def get_place_location(
+        self, place: str 
+    ) -> list:
 
         geolocator = Nominatim(user_agent="geoapiExercises")
         location = geolocator.geocode(place)
@@ -87,12 +98,15 @@ class Program:
 
         return [result_time_zone, location.longitude, location.latitude]
 
-    def get_api_info(self, long, lat):
+
+    def get_api_info(
+        self, long: int, lat: int
+    ) -> list:
 
         place_long = long
         place_lat = lat
 
-        API_KEY = 'YOUR API KEY'
+        API_KEY = os.getenv("API_KEY")
         api = f"https://api.openweathermap.org/data/2.5/weather?lat={round(place_lat)}&lon={round(place_long)}&appid={API_KEY}"
 
         json_data = requests.get(api).json()
@@ -106,7 +120,10 @@ class Program:
 
         return [temp, feels_like, wind, description, humidity, pressure]
 
-    def get_Weather(self):
+
+    def get_Weather(
+        self
+    ) -> None:
         self.current_weather.set("CURRENT WEATHER")
         self.wind_text.set("WIND")
         self.description_text.set("DESCRIPTION")
@@ -129,9 +146,6 @@ class Program:
 
         self.thermal_sensation.set(f"{result_api[3]} | FEELS LIKE {result_api[1]}°")
         self.degrees.set(f"{result_api[0]}°")
-
-
-
 
 
 root=Tk()
