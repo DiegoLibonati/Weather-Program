@@ -1,0 +1,40 @@
+import os
+from tkinter import CENTER
+from tkinter import FLAT
+from tkinter import BOTTOM
+
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+
+# CONFIG TK
+FONT_FAMILY = "poppins"
+
+FONT_POPPINS_15 = (FONT_FAMILY, 15)
+FONT_POPPINS_16 = (FONT_FAMILY, 16)
+FONT_POPPINS_20 = (FONT_FAMILY, 20)
+FONT_POPPINS_22 = (FONT_FAMILY, 22)
+FONT_POPPINS_40 = (FONT_FAMILY, 40)
+FONT_POPPINS_BOLD_25 = (FONT_FAMILY, 25, "bold")
+
+PRIMARY_COLOR = "#4c75bd"
+SECONDARY_COLOR = "#F37878"
+WHITE_COLOR = "#FFFFFF"
+BLACK_COLOR = "#000000"
+
+JUSTIFY_CENTER = CENTER
+
+SIDE_BOTTOM = BOTTOM
+
+ANCHOR_CENTER = CENTER
+
+RELIEF_FLAT = FLAT
+
+CURSOR_HAND2 = "hand2"
+
+
+# GENERAL CONFIG
+API_KEY = os.getenv("API_KEY")
+API_URL = os.getenv("API_URL")

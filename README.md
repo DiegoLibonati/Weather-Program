@@ -4,8 +4,11 @@
 
 1. Clone the repository
 2. Join to the correct path of the clone
-3. Install requirements.txt
-4. Use `python ./src/app.py` to execute program
+3. Execute: `python -m venv venv`
+4. Execute in Windows: `venv\Scripts\activate`
+5. Execute: `pip install -r requirements.txt`
+6. Execute: `pip install -r requirements.test.txt`
+7. Use `python -m src.app` to execute program
 
 ## Description
 
@@ -17,12 +20,22 @@ I made a python program using tkinter as user interface. This program makes requ
 
 ## Libraries used
 
-1. Tkinter
-2. geopy
-3. timezonefinder
-4. datetime
-5. requests
-6. pytz
+#### Requirements.txt
+
+```
+geopy
+pytz
+requests
+timezonefinder
+python-dotenv
+```
+
+#### Requirements.test.txt
+
+```
+pytest
+pytest-env
+```
 
 ## Portfolio Link
 
@@ -32,92 +45,8 @@ I made a python program using tkinter as user interface. This program makes requ
 
 https://user-images.githubusercontent.com/99032604/199621088-7b9f342a-5118-4910-b706-8e04ca3e5338.mp4
 
-## Documentation
+## Testing
 
-The `get_datetime()` function gets the current time in hours and minutes of the place we are looking for:
-
-```
-def get_datetime(
-    self, place: pytz
-) -> None:
-    
-    local_time_hours = datetime.now(place).hour
-    local_time_minutes = datetime.now(place).minute
-
-    if local_time_hours >= 12 and local_time_hours <= 23:
-        self.time.set(f"{local_time_hours}:{local_time_minutes} PM")
-        return
-    else: 
-        self.time.set(f"{utils.add_zero(local_time_hours)}:{local_time_minutes} AM")
-        return
-```
-
-The `get_place_location()` function gets the longitude and latitude of the location you are looking for:
-
-```
-def get_place_location(
-    self, place: str 
-) -> list:
-
-    geolocator = Nominatim(user_agent="geoapiExercises")
-    location = geolocator.geocode(place)
-    find_time_zone = TimezoneFinder()
-    result_time_zone = find_time_zone.timezone_at(lng=location.longitude, lat=location.latitude)
-
-    return [result_time_zone, location.longitude, location.latitude]
-```
-
-The `get_api_info()` function obtains the information from the API about the place that was searched, among these we find the temperature, the sensation ends, the wind, the description, the humidity and the pressure:
-
-```
-def get_api_info(
-    self, long: int, lat: int
-) -> list:
-
-    place_long = long
-    place_lat = lat
-
-    API_KEY = os.getenv("API_KEY")
-    api = f"https://api.openweathermap.org/data/2.5/weather?lat={round(place_lat)}&lon={round(place_long)}&appid={API_KEY}"
-
-    json_data = requests.get(api).json()
-    temp = int(json_data["main"]["temp"] - 273.15)
-    feels_like = int(json_data["main"]["feels_like"] - 273.15)
-
-    wind = json_data["wind"]["speed"]
-    description = json_data["weather"][0]["description"]
-    humidity = json_data["main"]["humidity"]
-    pressure = json_data["main"]["pressure"]
-
-    return [temp, feels_like, wind, description, humidity, pressure]
-```
-
-The `get_Weather()` function grabs the desired location information and renders it to the screen so the user can grab that information:
-
-```
-def get_Weather(
-    self
-) -> None:
-    self.current_weather.set("CURRENT WEATHER")
-    self.wind_text.set("WIND")
-    self.description_text.set("DESCRIPTION")
-    self.pressure_text.set("PRESSURE")
-    self.humidity_text.set("HUMIDITY")
-    place = self.entry_place.get()
-    
-    result_location = self.get_place_location(place)
-
-    result_time_zone = result_location[0]
-
-    entry_place=pytz.timezone(result_time_zone)
-    self.get_datetime(entry_place)
-    result_api = self.get_api_info(result_location[1], result_location[2])
-
-    self.wind_value.set(result_api[2])
-    self.humidity_value.set(result_api[4])
-    self.pressure_value.set(result_api[5])
-    self.description_value.set(result_api[3])
-
-    self.thermal_sensation.set(f"{result_api[3]} | FEELS LIKE {result_api[1]}°")
-    self.degrees.set(f"{result_api[0]}°")
-```
+1. Join to the correct path of the clone
+2. Execute in Windows: `venv\Scripts\activate`
+3. Execute: `pytest --log-cli-level=INFO`
