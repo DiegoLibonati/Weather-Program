@@ -5,6 +5,7 @@ import pytz
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 
+from src.utils import add_zero, get_weather_by_location
 from src.utils.constants import (
     ANCHOR_CENTER,
     BLACK_COLOR,
@@ -22,7 +23,6 @@ from src.utils.constants import (
     SIDE_BOTTOM,
     WHITE_COLOR,
 )
-from src.utils.utils import add_zero, get_weather_by_location
 
 
 class InterfaceApp:

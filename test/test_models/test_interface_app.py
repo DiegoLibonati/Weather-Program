@@ -5,8 +5,8 @@ import pytest
 import pytz
 
 from src.models import InterfaceApp
+from src.utils import add_zero
 from src.utils.constants import PRIMARY_COLOR
-from src.utils.utils import add_zero
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
