@@ -4,7 +4,7 @@ from datetime import datetime
 import pytest
 import pytz
 
-from src.models.InterfaceApp import InterfaceApp
+from src.models import InterfaceApp
 from src.utils.constants import PRIMARY_COLOR
 from src.utils.utils import add_zero
 

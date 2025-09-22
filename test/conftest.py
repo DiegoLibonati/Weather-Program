@@ -4,7 +4,7 @@ from tkinter import Tk
 import pytz
 from pytest import fixture
 
-from src.models.InterfaceApp import InterfaceApp
+from src.models import InterfaceApp
 
 
 @fixture
