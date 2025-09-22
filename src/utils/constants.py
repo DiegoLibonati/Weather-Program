@@ -1,10 +1,7 @@
 import os
-from tkinter import CENTER
-from tkinter import FLAT
-from tkinter import BOTTOM
+from tkinter import BOTTOM, CENTER, FLAT
 
 from dotenv import load_dotenv
-
 
 load_dotenv()
 

@@ -1,14 +1,10 @@
+from test.constants import MOCK_COORDS, MOCK_COUNTRY, MOCK_TIMEZONE
 from tkinter import Tk
 
 import pytz
-
 from pytest import fixture
 
 from src.models.InterfaceApp import InterfaceApp
-
-from test.constants import MOCK_COUNTRY
-from test.constants import MOCK_TIMEZONE
-from test.constants import MOCK_COORDS
 
 
 @fixture
@@ -19,7 +15,7 @@ def interface_app() -> InterfaceApp:
 
 @fixture
 def pytz_timezone(mock_timezone: str) -> pytz.tzfile:
-    return pytz.timezone(mock_timezone) 
+    return pytz.timezone(mock_timezone)
 
 
 @fixture

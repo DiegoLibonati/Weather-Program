@@ -1,15 +1,16 @@
 import logging
 from datetime import datetime
 
+import pytest
 import pytz
 
-import pytest
-
 from src.models.InterfaceApp import InterfaceApp
-from src.utils.utils import add_zero
 from src.utils.constants import PRIMARY_COLOR
+from src.utils.utils import add_zero
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 def test_initial_config_tk_app(interface_app: InterfaceApp) -> None:
@@ -29,7 +30,7 @@ def test_initial_config_tk_app(interface_app: InterfaceApp) -> None:
 
 def test_set_datetime(interface_app: InterfaceApp, pytz_timezone: pytz.tzfile) -> None:
     assert not interface_app._label_time.get()
-    
+
     interface_app._set_datetime(timezone=pytz_timezone)
 
     time_now_by_timezone = datetime.now(pytz_timezone)
@@ -38,10 +39,15 @@ def test_set_datetime(interface_app: InterfaceApp, pytz_timezone: pytz.tzfile) -
     minutes = time_now_by_timezone.minute
 
     if hours >= 12 and hours <= 23:
-        assert interface_app._label_time.get() == f"{add_zero(hours)}:{add_zero(minutes)} PM"
+        assert (
+            interface_app._label_time.get()
+            == f"{add_zero(hours)}:{add_zero(minutes)} PM"
+        )
         return
-    
-    assert interface_app._label_time.get() == f"{add_zero(hours)}:{add_zero(minutes)} AM"
+
+    assert (
+        interface_app._label_time.get() == f"{add_zero(hours)}:{add_zero(minutes)} AM"
+    )
 
 
 def test_get_place_information(interface_app: InterfaceApp, mock_country: str) -> None:
@@ -59,11 +65,15 @@ def test_get_place_information_invalid_location(interface_app: InterfaceApp) -> 
     assert str(exc_info.value) == "Location not found."
 
 
-def test_get_weather_conditions(interface_app: InterfaceApp, mock_coords: dict[str, float]) -> None:
+def test_get_weather_conditions(
+    interface_app: InterfaceApp, mock_coords: dict[str, float]
+) -> None:
     latitude = mock_coords["latitude"]
     longitude = mock_coords["longitude"]
 
-    weather_conditions = interface_app._get_weather_condtions(latitude=latitude, longitude=longitude)
+    weather_conditions = interface_app._get_weather_condtions(
+        latitude=latitude, longitude=longitude
+    )
 
     assert weather_conditions["temp"]
     assert weather_conditions["feels_like"]
@@ -118,4 +128,6 @@ def test_get_weather_invalid_entry(interface_app: InterfaceApp) -> None:
     with pytest.raises(ValueError) as exc_info:
         interface_app._get_weather()
 
-    assert str(exc_info.value) == "You must enter a valid location to check the weather."
+    assert (
+        str(exc_info.value) == "You must enter a valid location to check the weather."
+    )
