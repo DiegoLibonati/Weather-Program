@@ -1,12 +1,5 @@
-import os
 from tkinter import BOTTOM, CENTER, FLAT
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
-
-# CONFIG TK
 FONT_FAMILY = "poppins"
 
 FONT_POPPINS_15 = (FONT_FAMILY, 15)
@@ -30,8 +23,3 @@ ANCHOR_CENTER = CENTER
 RELIEF_FLAT = FLAT
 
 CURSOR_HAND2 = "hand2"
-
-
-# GENERAL CONFIG
-API_KEY = os.getenv("API_KEY")
-API_URL = os.getenv("API_URL")
