@@ -5,8 +5,8 @@ import pytz
 
 from src.core.paths import PATH_BOX, PATH_LOGO, PATH_SEARCH, PATH_SEARCH_ICON
 from src.services.weather_service import get_place_information, get_weather_by_location
-from src.utils import add_zero, parse_weather_data
-from src.utils.constants import (
+from src.utils.helpers import add_zero, parse_weather_data
+from src.utils.styles import (
     BLACK_COLOR,
     CURSOR_HAND2,
     FONT_POPPINS_15,

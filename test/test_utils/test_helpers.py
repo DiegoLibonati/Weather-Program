@@ -1,4 +1,4 @@
-from src.utils import add_zero, parse_weather_data
+from src.utils.helpers import add_zero, parse_weather_data
 
 
 def test_add_zero_with_single_digit():
