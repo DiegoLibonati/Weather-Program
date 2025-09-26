@@ -2,7 +2,7 @@ from typing import Any
 
 
 def add_zero(value: int) -> str:
-    if value >= 0 and value <= 10:
+    if value >= 0 and value < 10:
         return f"0{value}"
 
     return str(value)

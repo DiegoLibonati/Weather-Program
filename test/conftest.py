@@ -4,6 +4,7 @@ from tkinter import Tk
 import pytz
 from pytest import fixture
 
+from src.services.weather_service import WeatherService
 from src.ui.interface_app import InterfaceApp
 
 
@@ -11,6 +12,11 @@ from src.ui.interface_app import InterfaceApp
 def interface_app() -> InterfaceApp:
     root = Tk()
     return InterfaceApp(root=root)
+
+
+@fixture
+def weather_service() -> WeatherService:
+    return WeatherService()
 
 
 @fixture

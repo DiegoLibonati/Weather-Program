@@ -50,7 +50,7 @@ def test_set_datetime(interface_app: InterfaceApp, pytz_timezone: pytz.tzfile) -
         )
 
 
-def test_get_weather_success(interface_app: InterfaceApp) -> None:
+def test_get_weather_success(interface_app):
     interface_app._entry_place.set("Buenos Aires")
 
     fake_location = {"timezone": "UTC", "longitude": -58.38, "latitude": -34.6}
@@ -60,12 +60,15 @@ def test_get_weather_success(interface_app: InterfaceApp) -> None:
         "weather": [{"description": "sunny"}],
     }
 
-    with patch(
-        "src.ui.interface_app.get_place_information", return_value=fake_location
-    ), patch("src.ui.interface_app.get_weather_by_location", return_value=fake_weather):
-        assert not interface_app._label_current_weather.get()
-        assert not interface_app._label_degrees.get()
-
+    with patch.object(
+        interface_app._weather_service,
+        "get_place_information",
+        return_value=fake_location,
+    ), patch.object(
+        interface_app._weather_service,
+        "get_weather_by_location",
+        return_value=fake_weather,
+    ):
         interface_app._get_weather()
 
     assert interface_app._label_current_weather.get() == "CURRENT WEATHER"
